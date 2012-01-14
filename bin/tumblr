@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + "/../lib"
+require 'rubygems'
+#TODO Fix your path situation here
+require './lib/tumblr'
+require 'yaml'
+
+#TODO Suggestion to convert to either YAML or environment variables
+configuration = YAML.load(File.read(ENV['HOME'] + "/.tumblr")) rescue {}
+
+require 'irb'
+require 'irb/completion'
+
+if File.exists?(".irbrc")
+    ENV['IRBRC'] = ".irbrc"
+end
+
+Tumblr.configure do |config|
+  config.consumer_key = configuration["consumer_key"]
+  config.consumer_secret = configuration["consumer_secret"]
+  config.oauth_token = configuration["oauth_token"]
+  config.oauth_token_secret = configuration["oauth_token_secret"]
+end
+
+ARGV.clear
+IRB.start
+exit!
