@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
     gem.files = `git ls-files`.split("\n")
     gem.homepage = "http://github.com/codingjester/tumblr"
     gem.name = "tumblr"
-    gem.require_libs = ["lib"]
+    gem.require_paths = ["lib"]
     gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
     gem.summary = %q{Tumblr API wrapper}
     gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
