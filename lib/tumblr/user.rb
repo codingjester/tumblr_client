@@ -5,16 +5,16 @@ module Tumblr
         info = post("v2/user/info")
       end
 
-      def dashboard
-        dash = get("v2/user/dashboard")
+      def dashboard(params={})
+        dash = get("v2/user/dashboard", params)
       end
 
       def likes
         likes = get("v2/user/likes")
       end
 
-      def following
-        following = get("v2/user/following")
+      def following(offset=0, limit=20)
+        following = get("v2/user/following", {:limit => limit, :offset => offset})
       end
 
       def follow(url)

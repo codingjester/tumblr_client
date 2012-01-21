@@ -1,5 +1,4 @@
 require 'json'
-require 'oauth'
 
 module Tumblr
   module Request
@@ -10,7 +9,8 @@ module Tumblr
         req.url path 
         req.params = params
       end
-      JSON.parse(response.body)
+      #check for errors and encapsulate
+      JSON.parse(response.body)["response"]
     end
     
     #Performs post request
@@ -19,7 +19,8 @@ module Tumblr
         req.url path
         req.body = params unless params.empty?
       end
-      JSON.parse(response.body)
+      #Check for errors and encapsulate
+      JSON.parse(response.body)["response"]
     end
   end
 end

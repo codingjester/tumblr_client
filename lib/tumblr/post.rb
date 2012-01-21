@@ -15,9 +15,11 @@ module Tumblr
         post("v2/blog/#{blog_name}/post/delete", {:id => id})  
       end
 
-      #TODO Decide if you want people to just pass in a filename
       def photo(blog_name, options={})
         options[:type] = "photo"
+        if options.has_key?(:data)
+         options[:data] = File.open(options[:data],'rb').read()
+        end
         post("v2/blog/#{blog_name}/post", options)  
       end
       
@@ -48,6 +50,11 @@ module Tumblr
       
       def video(blog_name, options={})
         options[:type] = "video"
+        post("v2/blog/#{blog_name}/post", options)
+      end
+
+      def answer(blog_name, options={})
+        options[:type] = "answer"
         post("v2/blog/#{blog_name}/post", options)
       end
 

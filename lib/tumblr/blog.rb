@@ -13,14 +13,14 @@ module Tumblr
       #Defaults to 64
       #
       def avatar(blog_name, size=64)
-        avatar = get("v2/blog/#{blog_name}/avatar",{})
+        avatar = get("v2/blog/#{blog_name}/avatar", {:size => size})
       end
     
       #
       # Gets the list of followers for the blog
       #
-      def followers(blog_name)
-        followers = get("v2/blog/#{blog_name}/followers", {})
+      def followers(blog_name, options={})
+        followers = get("v2/blog/#{blog_name}/followers", options)
       end
 
       def posts(blog_name, type=false, options={})

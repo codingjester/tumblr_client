@@ -12,6 +12,7 @@ module Tumblr
         end
         header = SimpleOAuth::Header.new(env[:method], env[:url], signature_params, @options)
         env[:request_headers]["Authorization"] = header.to_s
+        puts header.to_s
         env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"                                                                              
         env[:request_headers]["Host"] = "api.tumblr.com"
         @app.call(env)
