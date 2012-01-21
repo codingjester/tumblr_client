@@ -2,8 +2,8 @@
 
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'rubygems'
-#TODO Fix your path situation here
-require './lib/tumblr'
+
+require 'tumblr'
 require 'yaml'
 
 #TODO Suggestion to convert to either YAML or environment variables
