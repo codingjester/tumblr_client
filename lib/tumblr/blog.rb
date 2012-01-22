@@ -1,6 +1,7 @@
 module Tumblr
   class Client
     module Blog
+      
       #
       #Gets the info about the blog
       #
@@ -20,7 +21,9 @@ module Tumblr
       # Gets the list of followers for the blog
       #
       def followers(blog_name, options={})
-        followers = get("v2/blog/#{blog_name}/followers", options)
+        if valid_options([:limit, :offset], options)
+           get("v2/blog/#{blog_name}/followers", options)
+        end
       end
 
       def posts(blog_name, type=false, options={})
@@ -34,21 +37,20 @@ module Tumblr
         unless options.empty?
           params.merge!(options)
         end
-        posts = get(url, params)
+        get(url, params)
       end
 
       def queue(blog_name)
-        queue = get("v2/blog/#{blog_name}/posts/queue", {})
+        get("v2/blog/#{blog_name}/posts/queue", {})
       end
       
       def draft(blog_name)
-        queue = get("v2/blog/#{blog_name}/posts/draft", {})
+        get("v2/blog/#{blog_name}/posts/draft", {})
       end
         
       def submissions(blog_name)
-        submissions = get("v2/blog/#{blog_name}/posts/submission", {})
+        get("v2/blog/#{blog_name}/posts/submission", {})
       end
-
     end
   end
 end

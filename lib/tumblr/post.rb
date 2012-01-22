@@ -18,7 +18,11 @@ module Tumblr
       def photo(blog_name, options={})
         options[:type] = "photo"
         if options.has_key?(:data)
-         options[:data] = File.open(options[:data],'rb').read()
+          if options[:data].kind_of?(Array)
+            options[:data] = options[:data].collect{|filename| File.open(filename,'rb').read()}
+          else
+            options[:data] = File.open(options[:data],'rb').read()
+          end
         end
         post("v2/blog/#{blog_name}/post", options)  
       end

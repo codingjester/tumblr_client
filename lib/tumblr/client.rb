@@ -3,6 +3,7 @@ require 'tumblr/user'
 require 'tumblr/request'
 require 'tumblr/connection'
 require 'tumblr/post'
+require 'tumblr/helpers'
 
 module Tumblr
   class Client
@@ -10,6 +11,7 @@ module Tumblr
     include Tumblr::Client::Blog
     include Tumblr::Client::User
     include Tumblr::Client::Post
+    include Tumblr::Client::Helper
     include Tumblr::Connection
     
     def initialize(attrs= {})

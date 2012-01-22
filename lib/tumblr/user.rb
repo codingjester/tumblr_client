@@ -5,12 +5,15 @@ module Tumblr
         info = post("v2/user/info")
       end
 
-      def dashboard(params={})
-        dash = get("v2/user/dashboard", params)
+      def dashboard(options={})
+        valid_opts = [:limit, :offset, :type, :since_id, :reblog_info, :notes_info]
+        if valid_options(valid_opts, options)
+          get("v2/user/dashboard", options)
+        end
       end
 
-      def likes
-        likes = get("v2/user/likes")
+      def likes(offset=0, limit=20)
+        likes = get("v2/user/likes", {:limit => limit, :offset => offset})
       end
 
       def following(offset=0, limit=20)

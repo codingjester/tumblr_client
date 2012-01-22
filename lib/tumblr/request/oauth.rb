@@ -1,6 +1,14 @@
 require 'faraday'
 require 'simple_oauth'
 
+module SimpleOAuth
+  class Header
+    def signature_base
+      #TODO Fix signature base
+    end
+  end
+end
+
 module Tumblr
   module Request
     class TumblrOAuth < Faraday::Middleware
