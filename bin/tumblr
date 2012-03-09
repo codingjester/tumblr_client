@@ -1,20 +1,14 @@
 #!/usr/bin/env ruby
-
-$:.unshift File.dirname(__FILE__) + "/../lib"
+$:.unshift File.join File.dirname(__FILE__), '..', 'lib'
 require 'rubygems'
-
 require 'tumblr'
 require 'yaml'
-
-#TODO Suggestion to convert to either YAML or environment variables
-configuration = YAML.load(File.read(ENV['HOME'] + "/.tumblr")) rescue {}
-
 require 'irb'
 require 'irb/completion'
 
-if File.exists?(".irbrc")
-    ENV['IRBRC'] = ".irbrc"
-end
+configuration = YAML.load_file File.join ENV['HOME'], '.tumblr' rescue {}
+
+ENV['IRBRC'] = '.irbrc' if File.exists? '.irbrc'
 
 Tumblr.configure do |config|
   config.consumer_key = configuration["consumer_key"]
@@ -22,6 +16,17 @@ Tumblr.configure do |config|
   config.oauth_token = configuration["oauth_token"]
   config.oauth_token_secret = configuration["oauth_token_secret"]
 end
+
+puts %q[
+        .                                 .o8       oooo
+      .o8                                "888       `888
+    .o888oo oooo  oooo  ooo. .oo.  .oo.   888oooo.   888  oooo d8b
+      888   `888  `888  `888P"Y88bP"Y88b  d88' `88b  888  `888""8P
+      888    888   888   888   888   888  888   888  888   888
+      888 .  888   888   888   888   888  888   888  888   888    .o.
+      "888"  `V88V"V8P' o888o o888o o888o `Y8bod8P' o888o d888b   Y8P
+
+]
 
 ARGV.clear
 IRB.start
