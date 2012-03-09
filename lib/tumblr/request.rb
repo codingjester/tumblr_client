@@ -10,7 +10,7 @@ module Tumblr
         req.params = params
       end
       #check for errors and encapsulate
-      response.body
+      response.body['response']
     end
     
     #Performs post request
@@ -20,7 +20,7 @@ module Tumblr
         req.body = params unless params.empty?
       end
       #Check for errors and encapsulate
-      response.body
+      response.body['response']
     end
   end
 end
