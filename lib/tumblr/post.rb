@@ -18,8 +18,14 @@ module Tumblr
       def photo(blog_name, options={})
         options[:type] = "photo"
         if options.has_key?(:data)
+          #Probably can be refactored
           if options[:data].kind_of?(Array)
-            options[:data] = options[:data].collect{|filename| File.open(filename,'rb').read()}
+            count = 0
+            options[:data].each do |filepath|
+              options["data[#{count}]"] = File.open(filepath, 'rb').read()
+              count += 1
+            end
+            options.delete(:data)
           else
             options[:data] = File.open(options[:data],'rb').read()
           end

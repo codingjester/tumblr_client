@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
     gem.add_dependency 'faraday', '~> 0.7'
-    gem.add_dependency 'simple_oauth', '~> 0.1'
+    gem.add_dependency 'faraday-stack'
     gem.add_dependency 'json'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rspec'
