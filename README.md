@@ -1,7 +1,7 @@
 # Tumblr Ruby Gem
 
 This is a ruby wrapper for the Tumblr v2 API. There should be support for all endpoints
-currently available on the [Tumblr API]('http://www.tumblr.com/docs/en/api/v2').
+currently available on the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
 
 ## Installation
 
