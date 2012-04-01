@@ -32,7 +32,7 @@ That's it! You now have a client that can make any request to the Tumblr API.
 
 ### Some quick examples
 
-Getting use information:
+Getting user information:
     
     >> client.info
 
