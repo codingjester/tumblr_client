@@ -1,11 +1,4 @@
-    .                                 .o8       oooo
-  .o8                                "888       `888
-.o888oo oooo  oooo  ooo. .oo.  .oo.   888oooo.   888  oooo d8b
-  888   `888  `888  `888P"Y88bP"Y88b  d88' `88b  888  `888""8P
-  888    888   888   888   888   888  888   888  888   888
-  888 .  888   888   888   888   888  888   888  888   888    .o.
-  "888"  `V88V"V8P' o888o o888o o888o `Y8bod8P' o888o d888b   Y8P
-
+# Tumblr Ruby Gem
 
 This is a ruby wrapper for the Tumblr v2 API. There should be support for all endpoints
 currently available on the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
