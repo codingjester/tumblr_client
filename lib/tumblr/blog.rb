@@ -26,11 +26,11 @@ module Tumblr
         end
       end
 
-      def posts(blog_name, type=false, options={})
+      def posts(blog_name, options={})
         url = "v2/blog/#{blog_name}/posts"
         
-        if type
-          url = "#{url}/#{type}"
+        if options.has_key?(:type)
+          url = "#{url}/#{options[:type]}"
         end
         
         params = {:api_key => Tumblr::consumer_key}
