@@ -41,8 +41,8 @@ Getting a specific blog's posts and type:
     #Grabbing a specific blogs posts
     >> client.posts("codingjester.tumblr.com")
     
-    #Grabbing only the last 10 photos off the blog
-    >> client.posts("codingjester.tumblr.com", "photo", :limit => 10)
+    #Grabbing only the last 10 photos off the blog 
+    >> client.posts("codingjester.tumblr.com", :type => "photo", :limit => 10)
 
 
 Posting some photos to Tumblr:
