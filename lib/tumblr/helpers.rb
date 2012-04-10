@@ -1,6 +1,7 @@
 module Tumblr
   class Client
     module Helper
+      
       def valid_options(valid_opts, opts)
         bad_opts = opts.select { |val| !valid_opts.include?(val) }
         if !bad_opts.empty?

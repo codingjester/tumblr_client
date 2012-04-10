@@ -2,11 +2,12 @@ module Tumblr
   class Client
     module Blog
       
+      @@standard_options = [:type, :id, :tag, :limit, :offset, :reblog_info, :notes_info, :filter]
       #
       #Gets the info about the blog
       #
       def blog_info(blog_name)
-        info = get("v2/blog/#{blog_name}/info", {:api_key => Tumblr::consumer_key})
+        get("v2/blog/#{blog_name}/info", {:api_key => Tumblr::consumer_key})
       end
     
       #
@@ -14,7 +15,7 @@ module Tumblr
       #Defaults to 64
       #
       def avatar(blog_name, size=64)
-        avatar = get("v2/blog/#{blog_name}/avatar", {:size => size})
+        get("v2/blog/#{blog_name}/avatar", {:size => size})
       end
     
       #
