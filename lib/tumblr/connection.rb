@@ -1,5 +1,5 @@
 require 'faraday'
-require 'faraday_stack'
+require 'faraday_middleware'
 require 'tumblr/request/oauth'
 
 module Tumblr
@@ -13,9 +13,9 @@ module Tumblr
         :url => "http://api.tumblr.com/"
       }
       Faraday.new("http://api.tumblr.com/", default_options.merge(options)) do |builder|
-        builder.use FaradayStack::ResponseJSON, content_type: "application/json"
         builder.use Tumblr::Request::TumblrOAuth, Tumblr::credentials if not Tumblr::credentials.empty?
         builder.use Faraday::Request::UrlEncoded
+        builder.use FaradayMiddleware::ParseJson, :content_type => "application/json"
         builder.use Faraday::Adapter::NetHttp
       end
     end
