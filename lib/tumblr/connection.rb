@@ -13,7 +13,7 @@ module Tumblr
         :url => "http://api.tumblr.com/"
       }
       Faraday.new("http://api.tumblr.com/", default_options.merge(options)) do |builder|
-        builder.use Tumblr::Request::TumblrOAuth, Tumblr::credentials if not Tumblr::credentials.empty?
+        builder.use Tumblr::Request::TumblrOAuth, credentials if not credentials.empty?
         builder.use Faraday::Request::UrlEncoded
         builder.use FaradayMiddleware::ParseJson, :content_type => "application/json"
         builder.use Faraday::Adapter::NetHttp
