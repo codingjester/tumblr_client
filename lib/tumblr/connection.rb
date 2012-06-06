@@ -1,10 +1,13 @@
 require 'faraday'
 require 'faraday_middleware'
-require 'tumblr/request/oauth'
+
+require 'tumblr/response/parse_json'
 
 module Tumblr
   module Connection
     def connection(options={})
+      return @connection if defined? @connection
+
       default_options = {
         :headers => {
           :accept => "application/json",
@@ -12,11 +15,12 @@ module Tumblr
         },
         :url => "http://api.tumblr.com/"
       }
-      Faraday.new("http://api.tumblr.com/", default_options.merge(options)) do |builder|
-        builder.use Tumblr::Request::TumblrOAuth, Tumblr::credentials if not Tumblr::credentials.empty?
+
+      @connection = Faraday.new("http://api.tumblr.com/", default_options.merge(options)) do |builder|
+        builder.use FaradayMiddleware::OAuth, credentials if !credentials.empty?
         builder.use Faraday::Request::UrlEncoded
-        builder.use FaradayMiddleware::ParseJson, :content_type => "application/json"
-        builder.use Faraday::Adapter::NetHttp
+        builder.use Tumblr::Response::ParseJson
+        builder.adapter adapter
       end
     end
   end
