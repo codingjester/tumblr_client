@@ -1,5 +1,5 @@
-require "tumblr/client"
-require "tumblr/config"
+require "tumblr_client/client"
+require "tumblr_client/config"
 
 module Tumblr
   extend Config

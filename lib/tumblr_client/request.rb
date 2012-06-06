@@ -1,8 +1,5 @@
-require 'json'
-
 module Tumblr
   module Request
-
     #Performs a get request
     def get(path, params={})
       response = connection.get do |req|
@@ -12,7 +9,7 @@ module Tumblr
       #check for errors and encapsulate
       response.body['response']
     end
-    
+
     #Performs post request
     def post(path, params={})
       response = connection.post do |req|

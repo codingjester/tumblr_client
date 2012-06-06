@@ -1,7 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 
-require 'tumblr/response/parse_json'
+require 'tumblr_client/response/parse_json'
 
 module Tumblr
   module Connection
