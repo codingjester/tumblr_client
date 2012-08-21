@@ -43,7 +43,7 @@ module Tumblr
          header = []
          params.each do |key, value|
             if key.to_s.include?("oauth")
-              header << "#{key.to_s}=#{value}"
+              header << "#{key.to_s}=\"#{value}\""
             end
          end
 
