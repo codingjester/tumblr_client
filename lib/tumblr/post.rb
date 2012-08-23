@@ -18,11 +18,19 @@ module Tumblr
       end
 
       def photo(blog_name, options={})
-        valid_opts = @@standard_post_options + [:caption, :link, :data, :source] 
+        valid_opts = @@standard_post_options + [:caption, :link, :data, :source, :photoset_layout]
         if valid_options(valid_opts, options)
           options[:type] = "photo"
           if (options.has_key?(:data) && options.has_key?(:source))
             raise Exception, "You can only use one parameter, either source or data."
+          end
+          if options.has_key?(:source) && options[:source].kind_of?(Array)
+            count = 0
+            options[:source].each do |src|
+              options["source[#{count}]"] = src
+              count += 1
+            end
+            options.delete(:source)
           end
           if options.has_key?(:data)
             #Probably can be refactored
