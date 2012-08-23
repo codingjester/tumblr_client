@@ -18,7 +18,7 @@ module Tumblr
       end
 
       def photo(blog_name, options={})
-        valid_opts = @@standard_post_options + [:caption, :link, :data, :source] 
+        valid_opts = @@standard_post_options + [:caption, :link, :data, :source, :photoset_layout]
         if valid_options(valid_opts, options)
           options[:type] = "photo"
           if (options.has_key?(:data) && options.has_key?(:source))
