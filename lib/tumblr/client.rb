@@ -3,6 +3,7 @@ require 'tumblr/user'
 require 'tumblr/request'
 require 'tumblr/connection'
 require 'tumblr/post'
+require 'tumblr/tagged'
 require 'tumblr/helpers'
 
 module Tumblr
@@ -11,6 +12,7 @@ module Tumblr
     include Tumblr::Client::Blog
     include Tumblr::Client::User
     include Tumblr::Client::Post
+    include Tumblr::Client::Tagged
     include Tumblr::Client::Helper
     include Tumblr::Connection
     
