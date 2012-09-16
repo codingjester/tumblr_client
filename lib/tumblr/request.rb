@@ -20,7 +20,7 @@ module Tumblr
         req.body = params unless params.empty?
       end
       #Check for errors and encapsulate
-      response(response)
+      respond(response)
     end
 
     def respond(response)
