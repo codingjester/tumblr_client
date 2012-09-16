@@ -10,11 +10,7 @@ module Tumblr
         req.params = params
       end
       #Check for errors and encapsulate
-      if [201,200].include?(response.body['meta']['status'])
-        response.body['response']
-      else
-        response.body['meta']
-      end
+      respond(response)
     end
     
     #Performs post request
@@ -24,7 +20,11 @@ module Tumblr
         req.body = params unless params.empty?
       end
       #Check for errors and encapsulate
-      if [201,200].include?(response.body['meta']['status'])
+      response(response)
+    end
+
+    def respond(response)
+      if [201, 200].include?(response.status)
         response.body['response']
       else
         response.body['meta']
