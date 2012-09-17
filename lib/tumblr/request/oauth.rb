@@ -9,8 +9,14 @@ module Tumblr
     class TumblrOAuth < Faraday::Middleware
       def call(env)
         if env[:method].to_s == "get"
-            params = env[:url].query_values || {}
-            url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
+          params = {}
+          query_string = env[:url].query
+          if query_string.present?
+            query_string.split("&").each do |param|
+              param.split("=").tap { |key,value| params[key] = value }
+            end
+          end
+          url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
             params = env[:body] || {}
             url = env[:url]
