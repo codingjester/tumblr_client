@@ -16,20 +16,21 @@ module Tumblr
             {}
           end
 
-            url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
+          url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
-            params = env[:body] || {}
-            url = env[:url]
+          params = env[:body] || {}
+          url = env[:url]
         end
+
         signature_params = params
         params.each do |key, value|
           signature_params = {} if value.respond_to?(:content_type)
         end
+
         env[:request_headers]["Authorization"] = self.oauth_gen(env[:method], url, signature_params) 
         env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"                                                                              
         env[:request_headers]["Host"] = "api.tumblr.com"
         
-
         @app.call(env)
       end
 
