@@ -2,7 +2,7 @@ module Tumblr
   class Client
     module User
       def info
-        info = post("v2/user/info")
+        info = get("v2/user/info")
       end
 
       def dashboard(options={})
