@@ -9,8 +9,8 @@ module Tumblr
         req.url path 
         req.params = params
       end
-      #check for errors and encapsulate
-      response.body['response']
+      #Check for errors and encapsulate
+      respond(response)
     end
     
     #Performs post request
@@ -20,7 +20,16 @@ module Tumblr
         req.body = params unless params.empty?
       end
       #Check for errors and encapsulate
-      response.body['response']
+      respond(response)
     end
+
+    def respond(response)
+      if [201, 200].include?(response.status)
+        response.body['response']
+      else
+        response.body['meta']
+      end
+    end
+    
   end
 end
