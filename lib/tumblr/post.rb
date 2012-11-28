@@ -1,20 +1,19 @@
 module Tumblr
   class Client
     module Post
-      
       @@standard_post_options  = [:state, :tags, :tweet, :date, :markdown, :slug]
-      
+
       def edit(blog_name, options={})
-        post("v2/blog/#{blog_name}/post/edit", options)  
+        post("v2/blog/#{blog_name}/post/edit", options)
       end
 
       #Don't be lazy and create a nice interface
       def reblog(blog_name, options={})
-        post("v2/blog/#{blog_name}/post/reblog", options)  
+        post("v2/blog/#{blog_name}/post/reblog", options)
       end
-      
+
       def delete(blog_name, id)
-        post("v2/blog/#{blog_name}/post/delete", {:id => id})  
+        post("v2/blog/#{blog_name}/post/delete", {:id => id})
       end
 
       def photo(blog_name, options={})
@@ -45,10 +44,10 @@ module Tumblr
               options[:data] = File.open(options[:data],'rb').read()
             end
           end
-          post("v2/blog/#{blog_name}/post", options)  
+          post("v2/blog/#{blog_name}/post", options)
         end
       end
-      
+
       def quote(blog_name, options={})
         valid_opts = @@standard_post_options + [:quote, :source]
         if valid_options(valid_opts, options)
@@ -94,7 +93,7 @@ module Tumblr
           post("v2/blog/#{blog_name}/post", options)
         end
       end
-      
+
       def video(blog_name, options={})
         valid_opts = @@standard_post_options + [:data, :embed, :caption]
         if valid_options(valid_opts, options)
@@ -109,5 +108,5 @@ module Tumblr
         end
       end
     end
-   end
+  end
 end

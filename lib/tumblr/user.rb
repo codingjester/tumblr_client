@@ -23,7 +23,7 @@ module Tumblr
       def follow(url)
         follow = post("v2/user/follow", {:url => url})
       end
-    
+
       def unfollow(url)
         follow = post("v2/user/unfollow", {:url => url})
       end

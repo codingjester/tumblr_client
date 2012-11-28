@@ -9,20 +9,20 @@ module Tumblr
     class TumblrOAuth < Faraday::Middleware
       def call(env)
         if env[:method].to_s == "get"
-            params = env[:url].query_values || {}
-            url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
+          query = env[:url].query
+          params = query ? Faraday::Utils.parse_query(query) : {}
+          url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
-            params = env[:body] || {}
-            url = env[:url]
+          params = env[:body] || {}
+          url = env[:url]
         end
         signature_params = params
         params.each do |key, value|
           signature_params = {} if value.respond_to?(:content_type)
         end
-        env[:request_headers]["Authorization"] = self.oauth_gen(env[:method], url, signature_params) 
-        env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"                                                                              
+        env[:request_headers]["Authorization"] = self.oauth_gen(env[:method], url, signature_params)
+        env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"
         env[:request_headers]["Host"] = "api.tumblr.com"
-        
 
         @app.call(env)
       end
@@ -39,27 +39,26 @@ module Tumblr
          params[:oauth_token] = @options[:token]
          params[:oauth_version] = "1.0"
          params[:oauth_signature] = self.oauth_sig(method, url, params)
-         
+
          header = []
          params.each do |key, value|
-            if key.to_s.include?("oauth")
-              header << "#{key.to_s}=#{value}"
-            end
+           if key.to_s.include?("oauth")
+             header << "#{key.to_s}=#{value}"
+           end
          end
 
          "OAuth #{header.join(", ")}"
-
       end
-      
+
       def oauth_sig(method, url, params)
         parts = [method.upcase, URI.encode(url.to_s, /[^a-z0-9\-\.\_\~]/i)]
-        
+
         #sort the parameters
         params = Hash[params.sort_by{ |key, value| key.to_s}]
-        
+
         encoded = []
         params.each do |key, value|
-            encoded << "#{key.to_s}=#{URI.encode(value.to_s, /[^a-z0-9\-\.\_\~]/i)}"
+          encoded << "#{key.to_s}=#{URI.encode(value.to_s, /[^a-z0-9\-\.\_\~]/i)}"
         end
 
         parts << URI.encode(encoded.join("&"), /[^a-z0-9\-\.\_\~]/i)
