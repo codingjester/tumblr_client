@@ -9,7 +9,7 @@ module Tumblr
     class TumblrOAuth < Faraday::Middleware
       def call(env)
         if env[:method].to_s == "get"
-            params = env[:url].query_values || {}
+            params = Faraday::Utils.parse_query(env[:url].query) || {}
             url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
             params = env[:body] || {}
