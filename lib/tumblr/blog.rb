@@ -37,8 +37,6 @@ module Tumblr
           unless options.empty?
             params.merge!(options)
           end
-          puts url
-          pp params
           get(url, params)
         end
       end
