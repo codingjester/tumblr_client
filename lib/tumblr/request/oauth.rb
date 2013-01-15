@@ -43,7 +43,7 @@ module Tumblr
          header = []
          params.each do |key, value|
             if key.to_s.include?("oauth")
-              header << "#{key.to_s}=#{value}"
+              header << "#{key.to_s}=\"#{value}\""
             end
          end
 
@@ -52,7 +52,7 @@ module Tumblr
       end
       
       def oauth_sig(method, url, params)
-        parts = [method.upcase, URI.encode(url.to_s, /[^a-z0-9\-\.\_\~]/i)]
+        parts = [method.to_s.upcase, URI.encode(url.to_s, /[^a-z0-9\-\.\_\~]/i)]
         
         #sort the parameters
         params = Hash[params.sort_by{ |key, value| key.to_s}]
