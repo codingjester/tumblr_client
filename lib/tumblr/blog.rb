@@ -26,6 +26,20 @@ module Tumblr
            get("v2/blog/#{blog_name}/followers", options)
         end
       end
+      
+      #
+      # Gets the list of likes for the blog
+      #
+      def blog_likes(blog_name, options={})
+        if valid_options([:limit, :offset], options)
+          url = "v2/blog/#{blog_name}/likes"
+          params = {:api_key => Tumblr::consumer_key}
+          unless options.empty?
+            params.merge!(options)
+          end
+          get(url, params)
+        end
+      end
 
       def posts(blog_name, options={})
         url = "v2/blog/#{blog_name}/posts"
