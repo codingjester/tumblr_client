@@ -2,20 +2,64 @@
 $:.unshift File.join File.dirname(__FILE__), '..', 'lib'
 require 'rubygems'
 require 'tumblr_client'
+require 'oauth'
 require 'yaml'
 require 'irb'
 require 'irb/completion'
 
-configuration = YAML.load_file File.join ENV['HOME'], '.tumblr' rescue {}
+path = File.join ENV['HOME'], '.tumblr'
+
+if File.exist?(path)
+
+  # Load configuration from data
+  configuration = YAML.load_file path
+  Tumblr.configure do |config|
+    Tumblr::Config::VALID_OPTIONS_KEYS.each do |key|
+      config.send(:"#{key}=", configuration[key.to_s])
+    end
+  end
+
+else
+
+  Tumblr.configure do |config|
+
+    puts "Register an application at: http://www.tumblr.com/oauth/apps"
+    print 'OAuth Consumer key: '
+    config.consumer_key = gets.chomp
+
+    print 'OAuth Consumer secret: '
+    config.consumer_secret = gets.chomp
+
+    site = 'http://www.tumblr.com'
+    consumer = OAuth::Consumer.new(config.consumer_key, config.consumer_secret, :site => site)
+    request_token = consumer.get_request_token
+
+    puts
+
+    puts request_token.authorize_url
+    puts "Post-redirect, copy the oauth_verifier"
+    print 'OAuth Verifier: '
+    verifier = gets.chomp
+
+    access_token = request_token.get_access_token :oauth_verifier => verifier
+    config.oauth_token = access_token.token
+    config.oauth_token_secret = access_token.secret
+
+  end
+
+  # Save credentials
+  File.open(path, 'w') do |f|
+    configuration = {}
+    Tumblr::Config::VALID_OPTIONS_KEYS.each do |key|
+      configuration[key.to_s] = Tumblr.send(key)
+    end
+    f.write YAML.dump configuration
+  end
+
+end
+
 
 ENV['IRBRC'] = '.irbrc' if File.exists? '.irbrc'
-
-Tumblr.configure do |config|
-  config.consumer_key = configuration["consumer_key"]
-  config.consumer_secret = configuration["consumer_secret"]
-  config.oauth_token = configuration["oauth_token"]
-  config.oauth_token_secret = configuration["oauth_token_secret"]
-end
 
 puts %q[
         .                                 .o8       oooo
