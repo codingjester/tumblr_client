@@ -30,6 +30,8 @@ module Tumblr
         response.body['meta']
       end
     end
+
+    private :get, :post, :respond
     
   end
 end

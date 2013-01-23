@@ -7,13 +7,14 @@ require 'base64'
 module Tumblr
   module Request
     class TumblrOAuth < Faraday::Middleware
+
       def call(env)
         if env[:method].to_s == "get"
-            params = Faraday::Utils.parse_query(env[:url].query) || {}
-            url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
+          params = Faraday::Utils.parse_query(env[:url].query) || {}
+          url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
-            params = env[:body] || {}
-            url = env[:url]
+          params = env[:body] || {}
+          url = env[:url]
         end
         signature_params = params
         params.each do |key, value|
@@ -23,7 +24,6 @@ module Tumblr
         env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"                                                                              
         env[:request_headers]["Host"] = "api.tumblr.com"
         
-
         @app.call(env)
       end
 
@@ -32,27 +32,26 @@ module Tumblr
       end
 
       def oauth_gen(method, url, params)
-         params[:oauth_consumer_key] = @options[:consumer_key]
-         params[:oauth_nonce] = Time.now.to_i
-         params[:oauth_signature_method] = 'HMAC-SHA1'
-         params[:oauth_timestamp] = Time.now.to_i
-         params[:oauth_token] = @options[:token]
-         params[:oauth_version] = "1.0"
-         params[:oauth_signature] = self.oauth_sig(method, url, params)
-         
-         header = []
-         params.each do |key, value|
-            if key.to_s.include?("oauth")
-              header << "#{key.to_s}=#{value}"
-            end
-         end
+        params[:oauth_consumer_key] = @options[:consumer_key]
+        params[:oauth_nonce] = Time.now.to_i
+        params[:oauth_signature_method] = 'HMAC-SHA1'
+        params[:oauth_timestamp] = Time.now.to_i
+        params[:oauth_token] = @options[:token]
+        params[:oauth_version] = "1.0"
+        params[:oauth_signature] = self.oauth_sig(method, url, params)
+        
+        header = []
+        params.each do |key, value|
+           if key.to_s.include?("oauth")
+             header << "#{key.to_s}=#{value}"
+           end
+        end
 
-         "OAuth #{header.join(", ")}"
-
+        "OAuth #{header.join(", ")}"
       end
       
       def oauth_sig(method, url, params)
-        parts = [method.upcase, URI.encode(url.to_s, /[^a-z0-9\-\.\_\~]/i)]
+        parts = [method.to_s.upcase, URI.encode(url.to_s, /[^a-z0-9\-\.\_\~]/i)]
         
         #sort the parameters
         params = Hash[params.sort_by{ |key, value| key.to_s}]
