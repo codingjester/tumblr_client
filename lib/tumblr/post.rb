@@ -30,7 +30,7 @@ module Tumblr
           options.delete(:source)
         end
 
-        if options.has_key(:data) && options[:data].kind_of?(Array)
+        if options.has_key?(:data) && options[:data].kind_of?(Array)
           count = 0
           options[:data].each do |filepath|
             options["data[#{count}]"] = File.open(filepath, 'rb').read()
@@ -79,7 +79,7 @@ module Tumblr
       
       private
 
-      def send_create(type, url, options={}, validators=[])
+      def send_create(type, blog_name, options={}, validators=[])
         valid_opts = @@standard_post_options + validators
         if valid_options(valid_opts, options)
           options[:type] = type
