@@ -27,7 +27,7 @@ module Tumblr
       if [201, 200].include?(response.status)
         response.body['response']
       else
-        response.body['meta']
+        response.body
       end
     end
 
