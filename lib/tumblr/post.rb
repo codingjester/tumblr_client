@@ -2,7 +2,7 @@ module Tumblr
   class Client
     module Post
       
-      @@standard_post_options  = [:state, :tags, :tweet, :date, :markdown, :slug]
+      @@standard_post_options  = [:state, :tags, :tweet, :date, :markdown, :slug, :format]
       
       def edit(blog_name, options={})
         post("v2/blog/#{blog_name}/post/edit", options)  
