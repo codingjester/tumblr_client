@@ -3,17 +3,20 @@ require 'json'
 module Tumblr
   module Request
 
-    #Performs a get request
-    def get(path, params={})
-      response = connection.get do |req|
-        req.url path 
+    # Perform a get request and return the raw response
+    def get_response(path, params = {})
+      connection.get do |req|
+        req.url path
         req.params = params
       end
-      #Check for errors and encapsulate
-      respond(response)
     end
-    
-    #Performs post request
+
+    # Performs a get request
+    def get(path, params={})
+      respond get_response(path, params)
+    end
+
+    # Performs post request
     def post(path, params={})
       response = connection.post do |req|
         req.url path
@@ -30,6 +33,6 @@ module Tumblr
         response.body['meta']
       end
     end
-    
+
   end
 end
