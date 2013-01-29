@@ -9,15 +9,17 @@ module Tumblr
       def blog_info(blog_name)
         get("v2/blog/#{blog_name}/info", {:api_key => Tumblr::consumer_key})
       end
-    
+
       #
-      #Gets the avatar of specified size
-      #Defaults to 64
+      # Gets the avatar URL of specified size
       #
-      def avatar(blog_name, size=64)
-        get("v2/blog/#{blog_name}/avatar", {:size => size})
+      def avatar(blog_name, size = nil)
+        response = get_response("v2/blog/#{blog_name}/avatar", :size => size)
+        if response.status == 301
+          response.headers['Location']
+        end
       end
-    
+
       #
       # Gets the list of followers for the blog
       #
