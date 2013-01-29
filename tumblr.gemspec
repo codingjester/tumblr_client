@@ -19,5 +19,5 @@ Gem::Specification.new do |gem|
     gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
     gem.summary = %q{Tumblr API wrapper}
     gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-    gem.version = "0.6.8"
+    gem.version = "0.6.9"
 end
