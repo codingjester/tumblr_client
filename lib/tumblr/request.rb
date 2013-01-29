@@ -13,7 +13,7 @@ module Tumblr
 
     # Performs a get request
     def get(path, params={})
-      respond get_response
+      respond get_response(path, params)
     end
 
     # Performs post request
