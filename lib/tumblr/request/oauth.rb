@@ -21,7 +21,7 @@ module Tumblr
         end
         env[:request_headers]["Authorization"] = self.oauth_gen(env[:method], url, signature_params) 
         env[:request_headers]["Content-type"] = "application/x-www-form-urlencoded"                                                                              
-        env[:request_headers]["Host"] = "api.tumblr.com"
+        env[:request_headers]["Host"] = @options[:api_host]
         
 
         @app.call(env)

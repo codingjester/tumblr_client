@@ -23,6 +23,10 @@ module Tumblr
       end
     end
 
+    def api_host
+      ENV['TUMBLR_API_HOST'] || 'api.tumblr.com'
+    end
+
     def credentials
       {
         :consumer_key => @consumer_key,
