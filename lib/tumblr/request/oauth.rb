@@ -33,7 +33,7 @@ module Tumblr
 
       def oauth_gen(method, url, params)
          params[:oauth_consumer_key] = @options[:consumer_key]
-         params[:oauth_nonce] = Time.now.to_i
+         params[:oauth_nonce] = Base64.encode64(OpenSSL::Random.random_bytes(32)).gsub(/\W/, '')
          params[:oauth_signature_method] = 'HMAC-SHA1'
          params[:oauth_timestamp] = Time.now.to_i
          params[:oauth_token] = @options[:token]
