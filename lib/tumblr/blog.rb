@@ -35,7 +35,7 @@ module Tumblr
       def blog_likes(blog_name, options={})
         if valid_options([:limit, :offset], options)
           url = "v2/blog/#{blog_name}/likes"
-          params = {:api_key => Tumblr::consumer_key}
+          params = {:api_key => @consumer_key}
           unless options.empty?
             params.merge!(options)
           end
