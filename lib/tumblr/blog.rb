@@ -7,7 +7,7 @@ module Tumblr
       #Gets the info about the blog
       #
       def blog_info(blog_name)
-        get("v2/blog/#{blog_name}/info", {:api_key => Tumblr::consumer_key})
+        get("v2/blog/#{blog_name}/info", {:api_key => @consumer_key})
       end
 
       #
@@ -50,7 +50,7 @@ module Tumblr
           url = "#{url}/#{options[:type]}"
         end
         
-        params = {:api_key => Tumblr::consumer_key}
+        params = {:api_key => @consumer_key}
         unless options.empty?
           params.merge!(options)
         end

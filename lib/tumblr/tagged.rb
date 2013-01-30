@@ -5,7 +5,7 @@ module Tumblr
       @@standard_options = [:before, :limit, :filter]
       
       def tagged(tag, options={})
-        params = {:tag => tag, :api_key => Tumblr::consumer_key}
+        params = {:tag => tag, :api_key => @consumer_key}
         unless options.empty?
           params.merge!(options)
         end
