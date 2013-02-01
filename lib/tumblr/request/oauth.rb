@@ -32,22 +32,22 @@ module Tumblr
       end
 
       def oauth_gen(method, url, params)
-        params[:oauth_consumer_key] = @options[:consumer_key]
-        params[:oauth_nonce] = Time.now.to_i
-        params[:oauth_signature_method] = 'HMAC-SHA1'
-        params[:oauth_timestamp] = Time.now.to_i
-        params[:oauth_token] = @options[:token]
-        params[:oauth_version] = "1.0"
-        params[:oauth_signature] = self.oauth_sig(method, url, params)
-        
-        header = []
-        params.each do |key, value|
-           if key.to_s.include?("oauth")
-             header << "#{key.to_s}=#{value}"
-           end
-        end
+         params[:oauth_consumer_key] = @options[:consumer_key]
+         params[:oauth_nonce] = Base64.encode64(OpenSSL::Random.random_bytes(32)).gsub(/\W/, '')
+         params[:oauth_signature_method] = 'HMAC-SHA1'
+         params[:oauth_timestamp] = Time.now.to_i
+         params[:oauth_token] = @options[:token]
+         params[:oauth_version] = "1.0"
+         params[:oauth_signature] = self.oauth_sig(method, url, params)
+         
+         header = []
+         params.each do |key, value|
+            if key.to_s.include?("oauth")
+              header << "#{key.to_s}=#{value}"
+            end
+         end
 
-        "OAuth #{header.join(", ")}"
+         "OAuth #{header.join(", ")}"
       end
       
       def oauth_sig(method, url, params)
