@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    tumblr_client (0.6.8)
+    tumblr_client (0.6.11)
       faraday (>= 0.8)
-      faraday_middleware
+      faraday_middleware (>= 0.8)
       json
       oauth
 
