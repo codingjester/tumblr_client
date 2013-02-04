@@ -25,8 +25,9 @@ describe Tumblr::Client::User do
            client.should_receive(:get).with("v2/user/#{type}", {
              :limit => 20,
              :offset => 0
-           })
-           client.send type
+           }).and_return('response')
+           r = client.send type
+           r.should == 'response'
          end
 
       end
@@ -37,10 +38,49 @@ describe Tumblr::Client::User do
            client.should_receive(:get).with("v2/user/#{type}", {
              :limit => 10,
              :offset => 5
-           })
-           client.send type, 5, 10
+           }).and_return('response')
+           r = client.send type, 5, 10
+           r.should == 'response'
          end
 
+      end
+
+    end
+
+  end
+
+  # Like and unlike are similar
+  [:like, :unlike].each do |type|
+
+    describe type do
+
+      it 'should make the request properly' do
+        id = 123
+        reblog_key = 'hello'
+        client.should_receive(:post).with("v2/user/#{type}", {
+          :id => id,
+          :reblog_key => reblog_key
+        }).and_return('response')
+        r = client.send type, id, reblog_key
+        r.should == 'response'
+      end
+
+    end
+
+  end
+
+  # Follow and unfollow are similar
+  [:follow, :unfollow].each do |type|
+
+    describe type do
+
+      it 'should make the request properly' do
+        url = 'some url'
+        client.should_receive(:post).with("v2/user/#{type}", {
+          :url => url
+        }).and_return('response')
+        r = client.send type, url
+        r.should == 'response'
       end
 
     end

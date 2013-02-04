@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'webmock'
+  gem.add_development_dependency 'simplecov'
   gem.authors = ["John Bunting"]
   gem.description = %q{A Ruby wrapper for the Tumblr v2 API}
   gem.email = ['codingjester@gmail.com']
