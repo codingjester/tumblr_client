@@ -18,7 +18,7 @@ module Tumblr
       end
 
       def photo(blog_name, options={})
-        valid_opts = @@standard_post_options + [:caption, :link, :data, :source, :photoset_layout]
+        valid_opts = @@standard_post_options + [:caption, :link, :data, :data_raw, :source, :photoset_layout]
         if valid_options(valid_opts, options)
           options[:type] = "photo"
           if (options.has_key?(:data) && options.has_key?(:source))
@@ -32,23 +32,33 @@ module Tumblr
             end
             options.delete(:source)
           end
+
+          if options.has_key?(:data) && options.has_key?(:data_raw)
+            raise ArgumentError.new 'You can only use data or data_raw'
+          end
+
+          # Allow data to be passed as filenames
           if options.has_key?(:data)
-            #Probably can be refactored
-            if options[:data].kind_of?(Array)
-              count = 0
-              options[:data].each do |filepath|
-                options["data[#{count}]"] = File.open(filepath, 'rb').read()
-                count += 1
-              end
-              options.delete(:data)
-            else
-              options[:data] = File.open(options[:data],'rb').read()
+            data = options.delete :data
+            data = [data] unless Array === data
+            data.each.with_index do |filepath, idx|
+              options["data[#{idx}]"] = File.open(filepath, 'rb').read
             end
           end
-          post("v2/blog/#{blog_name}/post", options)  
+
+          # Allow raw data to be passed in also
+          if options.has_key?(:data_raw)
+            data_raw = options.delete :data_raw
+            data_raw = [data_raw] unless Array === data_raw
+            data_raw.each.with_index do |dr, idx|
+              options[:"data[#{idx}]"] = dr
+            end
+          end
+
+          post("v2/blog/#{blog_name}/post", options)
         end
       end
-      
+
       def quote(blog_name, options={})
         valid_opts = @@standard_post_options + [:quote, :source]
         if valid_options(valid_opts, options)
@@ -108,6 +118,7 @@ module Tumblr
           post("v2/blog/#{blog_name}/post", options)
         end
       end
+
     end
-   end
+  end
 end

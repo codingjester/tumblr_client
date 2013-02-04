@@ -47,8 +47,12 @@ Getting a specific blog's posts and type:
 
 Posting some photos to Tumblr:
 
-    #Uploads a great photoset
+    # Uploads a great photoset
     >> client.photo("codingjester.tumblr.com", {:data => ['/path/to/pic.jpg', '/path/to/pic.jpg']}) 
+
+    # You can also post with the raw data
+    >> raw = File.open('/path/to/pic.jpg', 'rb').read
+    >> client.photo('codingjester.tumblr.com', :data_raw => [raw]
 
 ### The irb Console
 
