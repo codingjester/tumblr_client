@@ -1,5 +1,7 @@
 # Tumblr Ruby Gem
 
+[![Build Status](https://secure.travis-ci.org/codingjester/tumblr_client.png)](http://travis-ci.org/codingjester/tumblr_client)
+
 This is a ruby wrapper for the Tumblr v2 API. There should be support for all endpoints
 currently available on the [Tumblr API](http://www.tumblr.com/docs/en/api/v2).
 
