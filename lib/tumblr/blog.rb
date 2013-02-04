@@ -57,16 +57,19 @@ module Tumblr
         get(url, params)
       end
 
-      def queue(blog_name)
-        get("v2/blog/#{blog_name}/posts/queue", {})
+      def queue(blog_name, options = {})
+        valid_options([:limit, :offset], options)
+        get("v2/blog/#{blog_name}/posts/queue", options)
       end
-      
-      def draft(blog_name)
-        get("v2/blog/#{blog_name}/posts/draft", {})
+
+      def draft(blog_name, options = {})
+        valid_options([:limit, :offset], options)
+        get("v2/blog/#{blog_name}/posts/draft", options)
       end
-        
-      def submissions(blog_name)
-        get("v2/blog/#{blog_name}/posts/submission", {})
+
+      def submissions(blog_name, options = {})
+        valid_options([:limit, :offset], options)
+        get("v2/blog/#{blog_name}/posts/submission", options)
       end
     end
   end
