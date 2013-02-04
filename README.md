@@ -53,7 +53,7 @@ Posting some photos to Tumblr:
 ### The irb Console
 
 Finally, there is an irb console packaged with the gem that should help you test any calls you want to make.
-The magic here is that you have a ```.tumblr``` file in your home directory. Inside this file it's just a basic
+The magic here is that you have a `.tumblr` file in your home directory. Inside this file it's just a basic
 YAML layout with four lines:
 
     consumer_key: "your_consumer_key"
@@ -61,9 +61,18 @@ YAML layout with four lines:
     oauth_token: "your_access_token"
     oauth_token_secret: "your_access_token_secret"
 
-From there, you should be able to run any of the above commands, with no problem! Just fire off the command ```tumblr``
+From there, you should be able to run any of the above commands, with no problem! Just fire off the command `tumblr`
 from the terminal and you should be dropped into a console.
 
+---
+
+The first time that you go to use the irb console, if you have no `.tumblr`
+file, it will walk you through the process of generating one.  You will
+be prompted for your consumer_key and consumer_secret (which you can get
+here: http://www.tumblr.com/oauth/register) and then sent out to the site
+to verify your account.  Once you verify, you will be redirected to your
+redirect URL (localhost by default) and copy the `oauth_verifier` back into the
+console.  Then you're all set!
 
 ### Contributions and Pull Requests
 
