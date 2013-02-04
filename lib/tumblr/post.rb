@@ -67,7 +67,7 @@ module Tumblr
       end
 
       def audio(blog_name, options = {})
-        valid_opts = STANDARD_POST_OPTIONS + [:data, :caption, :external_url]
+        valid_opts = STANDARD_POST_OPTIONS + [:data, :data_raw, :caption, :external_url]
         validate_options(valid_opts, options)
         validate_no_collision options, [:data, :external_url]
 
@@ -77,7 +77,7 @@ module Tumblr
       end
 
       def video(blog_name, options = {})
-        valid_opts = STANDARD_POST_OPTIONS + [:data, :embed, :caption]
+        valid_opts = STANDARD_POST_OPTIONS + [:data, :data_raw, :embed, :caption]
         validate_options(valid_opts, options)
         validate_no_collision options, [:data, :embed]
 

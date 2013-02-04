@@ -27,84 +27,125 @@ describe Tumblr::Client::Post do
 
   end
 
-  describe :photo do
+  describe :quote do
 
     context 'when passing an option which is not allowed' do
 
       it 'should raise an error' do
         lambda {
-          client.photo blog_name, :not => 'an option'
+          client.quote blog_name, :not => 'an option'
         }.should raise_error ArgumentError
       end
 
     end
 
-    context 'when passing data different ways' do
+    context 'when passing valid data' do
 
       before do
-        fakefile = OpenStruct.new :read => file_data
-        File.stub(:open).with(file_path, 'rb').and_return(fakefile)
+        @quote = 'hello world'
         client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
-          'data[0]' => file_data,
-          :type => 'photo'
-        }).and_return('post')
+          :quote => @quote,
+          :type => 'quote'
+        }).and_return('response')
       end
 
-      it 'should be able to pass data as an array of filepaths' do
-        r = client.photo blog_name, :data => [file_path]
-        r.should == 'post'
-      end
-
-      it 'should be able to pass data as a single filepath' do
-        r = client.photo blog_name, :data => file_path
-        r.should == 'post'
-      end
-
-      it 'should be able to pass an array of raw data' do
-        r = client.photo blog_name, :data_raw => [file_data]
-        r.should == 'post'
-      end
-
-      it 'should be able to pass raw data' do
-        r = client.photo blog_name, :data_raw => file_data
-        r.should == 'post'
+      it 'should set up the call properly' do
+        r = client.quote blog_name, :quote => @quote
+        r.should == 'response'
       end
 
     end
 
-    context 'when passing source different ways' do
+  end
 
-      it 'should be able to be passed as a string' do
-        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
-          :source => source,
-          :type => 'photo'
-        })
-        client.photo blog_name, :source => source
+  # Complex post types
+  [:photo, :audio, :video].each do |type|
+
+    describe type do
+
+      context 'when passing an option which is not allowed' do
+
+        it 'should raise an error' do
+          lambda {
+            client.send type, blog_name, :not => 'an option'
+          }.should raise_error ArgumentError
+        end
+
       end
 
-      it 'should be able to be passed as an array' do
-        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
-          'source[0]' => source,
-          'source[1]' => source,
-          :type => 'photo'
-        })
-        client.photo blog_name, :source => [source, source]
+      context 'when passing data different ways' do
+
+        before do
+          fakefile = OpenStruct.new :read => file_data
+          File.stub(:open).with(file_path, 'rb').and_return(fakefile)
+          client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+            'data[0]' => file_data,
+            :type => type.to_s
+          }).and_return('post')
+        end
+
+        it 'should be able to pass data as an array of filepaths' do
+          r = client.send type, blog_name, :data => [file_path]
+          r.should == 'post'
+        end
+
+        it 'should be able to pass data as a single filepath' do
+          r = client.send type, blog_name, :data => file_path
+          r.should == 'post'
+        end
+
+        it 'should be able to pass an array of raw data' do
+          r = client.send type, blog_name, :data_raw => [file_data]
+          r.should == 'post'
+        end
+
+        it 'should be able to pass raw data' do
+          r = client.send type, blog_name, :data_raw => file_data
+          r.should == 'post'
+        end
+
       end
 
-    end
+      # Only photos have source
+      if type == :photo
 
-    context 'when passing colliding options' do
+        context 'when passing source different ways' do
 
-      it 'should get an error when passing data & source' do
-        lambda {
-          client.photo blog_name, :data => 'hi', :source => 'bye'
-        }.should raise_error ArgumentError
+          it 'should be able to be passed as a string' do
+            client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+              :source => source,
+              :type => type.to_s
+            })
+            client.send type, blog_name, :source => source
+          end
+
+          it 'should be able to be passed as an array' do
+            client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+              'source[0]' => source,
+              'source[1]' => source,
+              :type => type.to_s
+            })
+            client.send type, blog_name, :source => [source, source]
+          end
+
+        end
+
       end
 
-      it 'should get an error when passing data & raw_data' do
-        lambda {
-          client.photo blog_name, :raw_data => 'hi', :data => 'bye'
-        }.should raise_error ArgumentError
+      context 'when passing colliding options' do
+
+        it 'should get an error when passing data & source' do
+          lambda {
+            client.send type, blog_name, :data => 'hi', :source => 'bye'
+          }.should raise_error ArgumentError
+        end
+
+        it 'should get an error when passing data & raw_data' do
+          lambda {
+            client.send type, blog_name, :raw_data => 'hi', :data => 'bye'
+          }.should raise_error ArgumentError
+        end
+
       end
 
     end
