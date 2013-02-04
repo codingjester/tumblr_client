@@ -27,31 +27,38 @@ describe Tumblr::Client::Post do
 
   end
 
-  describe :quote do
+  # Simple post types
+  [:quote, :text, :link, :chat].each do |type|
 
-    context 'when passing an option which is not allowed' do
+    field = type == :quote ? 'quote' : 'title' # uglay
 
-      it 'should raise an error' do
-        lambda {
-          client.quote blog_name, :not => 'an option'
-        }.should raise_error ArgumentError
+    describe type do
+
+      context 'when passing an option which is not allowed' do
+
+        it 'should raise an error' do
+          lambda {
+            client.send type, blog_name, :not => 'an option'
+          }.should raise_error ArgumentError
+        end
+
       end
 
-    end
+      context 'when passing valid data' do
 
-    context 'when passing valid data' do
+        before do
+          @val = 'hello world'
+          client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+            field.to_sym => @val,
+            :type => type.to_s
+          }).and_return('response')
+        end
 
-      before do
-        @quote = 'hello world'
-        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
-          :quote => @quote,
-          :type => 'quote'
-        }).and_return('response')
-      end
+        it 'should set up the call properly' do
+          r = client.send type, blog_name, field.to_sym => @val
+          r.should == 'response'
+        end
 
-      it 'should set up the call properly' do
-        r = client.quote blog_name, :quote => @quote
-        r.should == 'response'
       end
 
     end
