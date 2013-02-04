@@ -1,6 +1,5 @@
 # encoding: utf-8
-
-require File.dirname(__FILE__) + '/lib/tumblr_client'
+require File.join(File.dirname(__FILE__), 'lib/tumblr/version')
 
 Gem::Specification.new do |gem|
   gem.add_dependency 'faraday', '>= 0.8'
