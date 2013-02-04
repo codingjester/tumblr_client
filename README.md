@@ -70,3 +70,7 @@ from the terminal and you should be dropped into a console.
 No request is too small and I encourage everyone to get involved. As you can see, we're sorely lacking in tests! So
 please if you would like to contribute, let me know and throw me a pull request!
 
+
+### Requirements
+
+* Ruby >= 1.9.2
