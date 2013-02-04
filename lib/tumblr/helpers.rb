@@ -4,10 +4,9 @@ module Tumblr
 
       def valid_options(valid_opts, opts)
         bad_opts = opts.select { |val| !valid_opts.include?(val) }
-        if !bad_opts.empty?
+        if bad_opts.any?
           raise ArgumentError.new "Invalid options (#{bad_opts.keys.join(', ')}) passed, only #{valid_opts} allowed."
         end
-        return true
       end
 
       def validate_no_collision(options, attributes)
