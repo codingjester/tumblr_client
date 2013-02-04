@@ -10,11 +10,11 @@ module Tumblr
 
       def call(env)
         if env[:method].to_s == 'get'
-            params = Faraday::Utils.parse_query(env[:url].query) || {}
-            url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
+          params = Faraday::Utils.parse_query(env[:url].query) || {}
+          url = "#{env[:url].scheme}://#{env[:url].host}#{env[:url].path}"
         else
-            params = env[:body] || {}
-            url = env[:url]
+          params = env[:body] || {}
+          url = env[:url]
         end
         signature_params = params
         params.each do |key, value|
@@ -42,9 +42,9 @@ module Tumblr
 
          header = []
          params.each do |key, value|
-            if key.to_s.include?('oauth')
-              header << "#{key.to_s}=#{value}"
-            end
+           if key.to_s.include?('oauth')
+             header << "#{key.to_s}=#{value}"
+           end
          end
 
          "OAuth #{header.join(", ")}"
@@ -58,7 +58,7 @@ module Tumblr
 
         encoded = []
         params.each do |key, value|
-            encoded << "#{key.to_s}=#{URI.encode(value.to_s, /[^a-z0-9\-\.\_\~]/i)}"
+          encoded << "#{key.to_s}=#{URI.encode(value.to_s, /[^a-z0-9\-\.\_\~]/i)}"
         end
 
         parts << URI.encode(encoded.join('&'), /[^a-z0-9\-\.\_\~]/i)

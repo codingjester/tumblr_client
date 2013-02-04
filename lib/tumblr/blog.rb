@@ -9,7 +9,7 @@ module Tumblr
     # Gets the avatar URL of specified size
     def avatar(blog_name, size = nil)
       url = "v2/blog/#{blog_name}/avatar"
-      url = "#{url}/#{size}" unless size.nil?
+      url = "#{url}/#{size}" if size
       get_redirect_url(url)
     end
 

@@ -9,7 +9,7 @@ module Tumblr
     end
 
     def validate_no_collision(options, attributes)
-      count = attributes.count { |a| options.has_key?(a) }
+      count = attributes.count { |attr| options.has_key?(attr) }
       if count > 1
         raise ArgumentError.new "Can only use one of: #{attributes.join(', ')} (Found #{count})"
       end
