@@ -34,7 +34,8 @@ module Tumblr
         valid_options([:limit, :offset], options)
         url = "v2/blog/#{blog_name}/likes"
 
-        options[:api_key] = @consumer_key unless options.has_key?(:api_key)
+        params = { :api_key => @consumer_key }
+        params.merge! options
         get(url, params)
       end
 
@@ -44,7 +45,8 @@ module Tumblr
           url = "#{url}/#{options[:type]}"
         end
 
-        options[:api_key] = @consumer_key unless options.has_key?(:api_key)
+        params = { :api_key => @consumer_key }
+        params.merge! options
         get(url, params)
       end
 
