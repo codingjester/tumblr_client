@@ -20,6 +20,102 @@ describe Tumblr::Client::Blog do
 
   end
 
+  describe :followers do
+
+    context 'with invalid parameters' do
+
+      it 'should raise an error' do
+        lambda {
+          client.followers blog_name, :not => 'an option'
+        }.should raise_error ArgumentError
+      end
+
+    end
+
+    context 'with valid parameters' do
+
+      before do
+        client.should_receive(:get).once.with("v2/blog/#{blog_name}/followers", {
+          :limit => 1
+        }).and_return('response')
+      end
+
+      it 'should construct the request properly' do
+        r = client.followers blog_name, :limit => 1
+        r.should == 'response'
+      end
+
+    end
+
+  end
+
+  describe :blog_likes do
+
+    context 'with invalid parameters' do
+
+      it 'should raise an error' do
+        lambda {
+          client.blog_likes blog_name, :not => 'an option'
+        }.should raise_error ArgumentError
+      end
+
+    end
+
+    context 'with valid parameters' do
+
+      before do
+        client.should_receive(:get).once.with("v2/blog/#{blog_name}/likes", {
+          :limit => 1,
+          :api_key => consumer_key
+        }).and_return('response')
+      end
+
+      it 'should construct the request properly' do
+        r = client.blog_likes blog_name, :limit => 1
+        r.should == 'response'
+      end
+
+    end
+
+  end
+
+  describe :posts do
+
+    context 'without a type supplied' do
+
+      before do
+        client.should_receive(:get).once.with("v2/blog/#{blog_name}/posts", {
+          :limit => 1,
+          :api_key => consumer_key
+        }).and_return('response')
+      end
+
+      it 'should construct the request properly' do
+        r = client.posts blog_name, :limit => 1
+        r.should == 'response'
+      end
+
+    end
+
+    context 'when supplying a type' do
+
+      before do
+        client.should_receive(:get).once.with("v2/blog/#{blog_name}/posts/audio", {
+          :limit => 1,
+          :api_key => consumer_key,
+          :type => 'audio'
+        }).and_return('response')
+      end
+
+      it 'should construct the request properly' do
+        r = client.posts blog_name, :limit => 1, :type => 'audio'
+        r.should == 'response'
+      end
+
+    end
+
+  end
+
   # These are all just lists of posts with pagination
   [:queue, :draft, :submissions].each do |type|
 
