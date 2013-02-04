@@ -3,7 +3,7 @@ module Tumblr
     module User
 
       def info
-        info = get('v2/user/info')
+        get('v2/user/info')
       end
 
       def dashboard(options = {})
@@ -13,7 +13,7 @@ module Tumblr
       end
 
       def likes(offset = 0, limit = 20)
-        likes = get('v2/user/likes', :limit => limit, :offset => offset)
+        get('v2/user/likes', :limit => limit, :offset => offset)
       end
 
       def following(offset = 0, limit = 20)
