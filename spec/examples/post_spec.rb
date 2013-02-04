@@ -6,8 +6,19 @@ describe Tumblr::Client::Post do
   let(:blog_name) { 'blogname' }
   let(:file_path) { '/path/to/the/file' }
   let(:file_data) { 'lol cats' }
+  let(:source)    { 'the source' }
 
   describe :photo do
+
+    context 'when passing an option which is not allowed' do
+
+      it 'should raise an error' do
+        lambda {
+          client.photo blog_name, :not => 'an option'
+        }.should raise_error ArgumentError
+      end
+      
+    end
 
     context 'when passing data different ways' do
 
@@ -42,7 +53,34 @@ describe Tumblr::Client::Post do
 
     end
 
+    context 'when passing source different ways' do
+
+      it 'should be able to be passed as a string' do
+        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+          :source => source,
+          :type => 'photo'
+        })
+        client.photo blog_name, :source => source
+      end
+
+      it 'should be able to be passed as an array' do
+        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post", {
+          'source[0]' => source,
+          'source[1]' => source,
+          :type => 'photo'
+        })
+        client.photo blog_name, :source => [source, source]
+      end
+
+    end
+
     context 'when passing colliding options' do
+
+      it 'should get an error when passing data & source' do
+        lambda {
+          client.photo blog_name, :data => 'hi', :source => 'bye'
+        }.should raise_error ArgumentError
+      end
 
       it 'should get an error when passing data & raw_data' do
         lambda {
