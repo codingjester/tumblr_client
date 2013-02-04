@@ -23,7 +23,7 @@ module Tumblr
       # Gets the list of followers for the blog
       #
       def followers(blog_name, options = {})
-        valid_options([:limit, :offset], options)
+        validate_options([:limit, :offset], options)
         get("v2/blog/#{blog_name}/followers", options)
       end
 
@@ -31,7 +31,7 @@ module Tumblr
       # Gets the list of likes for the blog
       #
       def blog_likes(blog_name, options = {})
-        valid_options([:limit, :offset], options)
+        validate_options([:limit, :offset], options)
         url = "v2/blog/#{blog_name}/likes"
 
         params = { :api_key => @consumer_key }
@@ -51,17 +51,17 @@ module Tumblr
       end
 
       def queue(blog_name, options = {})
-        valid_options([:limit, :offset], options)
+        validate_options([:limit, :offset], options)
         get("v2/blog/#{blog_name}/posts/queue", options)
       end
 
       def draft(blog_name, options = {})
-        valid_options([:limit, :offset], options)
+        validate_options([:limit, :offset], options)
         get("v2/blog/#{blog_name}/posts/draft", options)
       end
 
       def submissions(blog_name, options = {})
-        valid_options([:limit, :offset], options)
+        validate_options([:limit, :offset], options)
         get("v2/blog/#{blog_name}/posts/submission", options)
       end
 

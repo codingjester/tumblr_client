@@ -18,7 +18,7 @@ module Tumblr
 
       def photo(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:caption, :link, :data, :data_raw, :source, :photoset_layout]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
         validate_no_collision options, [:data, :source]
 
         # Allow source to be passed as an Array
@@ -36,7 +36,7 @@ module Tumblr
 
       def quote(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:quote, :source]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
 
         options[:type] = 'quote'
         post("v2/blog/#{blog_name}/post", options)
@@ -44,7 +44,7 @@ module Tumblr
 
       def text(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:title, :body]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
 
         options[:type] = 'text'
         post("v2/blog/#{blog_name}/post", options)
@@ -52,7 +52,7 @@ module Tumblr
 
       def link(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:title, :url, :description]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
 
         options[:type] = 'link'
         post("v2/blog/#{blog_name}/post", options)
@@ -60,7 +60,7 @@ module Tumblr
 
       def chat(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:title, :conversation]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
 
         options[:type] = 'chat'
         post("v2/blog/#{blog_name}/post", options)
@@ -68,7 +68,7 @@ module Tumblr
 
       def audio(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:data, :caption, :external_url]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
         validate_no_collision options, [:data, :external_url]
 
         options[:type] = 'audio'
@@ -78,7 +78,7 @@ module Tumblr
 
       def video(blog_name, options = {})
         valid_opts = STANDARD_POST_OPTIONS + [:data, :embed, :caption]
-        valid_options(valid_opts, options)
+        validate_options(valid_opts, options)
         validate_no_collision options, [:data, :embed]
 
         options[:type] = 'video'

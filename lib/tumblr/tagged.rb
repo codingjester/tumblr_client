@@ -3,7 +3,7 @@ module Tumblr
     module Tagged
 
       def tagged(tag, options={})
-        valid_options([:before, :limit, :filter], options)
+        validate_options([:before, :limit, :filter], options)
 
         params = { :tag => tag, :api_key => @consumer_key }
         params.merge!(options)
