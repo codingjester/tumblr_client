@@ -5,7 +5,7 @@ module Tumblr
       def valid_options(valid_opts, opts)
         bad_opts = opts.select { |val| !valid_opts.include?(val) }
         if !bad_opts.empty?
-          raise Exception, "Invalid options (#{bad_opts.keys.join(', ')}) passed, only #{valid_opts} allowed."
+          raise ArgumentError.new "Invalid options (#{bad_opts.keys.join(', ')}) passed, only #{valid_opts} allowed."
         end
         return true
       end

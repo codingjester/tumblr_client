@@ -102,7 +102,7 @@ module Tumblr
           data_raw = options.delete :data_raw
           data_raw = [data_raw] unless Array === data_raw
           data_raw.each.with_index do |dr, idx|
-            options[:"data[#{idx}]"] = dr
+            options["data[#{idx}]"] = dr
           end
         end
       end
