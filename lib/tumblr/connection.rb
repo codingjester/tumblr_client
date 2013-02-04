@@ -6,15 +6,16 @@ module Tumblr
   module Connection
 
     def connection(options={})
+      host = api_host
       default_options = {
         :headers => {
           :accept => 'application/json',
           :user_agent => "tumblr_client (ruby) - #{Tumblr::VERSION}"
         },
-        :url => "http://#{api_host}/"
+        :url => "http://#{host}/"
       }
-      Faraday.new("http://#{api_host}/", default_options.merge(options)) do |builder|
-        data = { :api_host => api_host }.merge(credentials)
+      Faraday.new("http://#{host}/", default_options.merge(options)) do |builder|
+        data = { :api_host => host }.merge(credentials)
         unless credentials.empty?
           builder.use Tumblr::Request::TumblrOAuth, data
         end

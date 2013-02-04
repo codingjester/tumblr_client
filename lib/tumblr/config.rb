@@ -17,7 +17,7 @@ module Tumblr
 
     def options
       options = {}
-      VALID_OPTIONS_KEYS.each{ |k| options[k] = send(k) }
+      VALID_OPTIONS_KEYS.each{ |pname| options[pname] = send(pname) }
       options
     end
 

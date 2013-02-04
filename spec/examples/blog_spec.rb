@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tumblr::Client::Blog do
+describe Tumblr::Blog do
 
   let(:blog_name) { 'seejohnrun.tumblr.com' }
   let(:consumer_key) { 'ckey' }

@@ -10,11 +10,11 @@ module Tumblr
   class Client
 
     include Tumblr::Request
-    include Tumblr::Client::Blog
-    include Tumblr::Client::User
-    include Tumblr::Client::Post
-    include Tumblr::Client::Tagged
-    include Tumblr::Client::Helper
+    include Tumblr::Blog
+    include Tumblr::User
+    include Tumblr::Post
+    include Tumblr::Tagged
+    include Tumblr::Helper
     include Tumblr::Connection
 
     def initialize(attrs= {})

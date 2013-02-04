@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tumblr::Client::User do
+describe Tumblr::User do
 
   let(:client) { Tumblr::Client.new }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tumblr::Client::Post do
+describe Tumblr::Post do
 
   let(:client) { Tumblr::Client.new }
   let(:blog_name) { 'blogname' }

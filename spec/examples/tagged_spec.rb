@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tumblr::Client::Tagged do
+describe Tumblr::Tagged do
 
   let(:client) { Tumblr::Client.new }
   let(:consumer_key) { 'consumer' }
