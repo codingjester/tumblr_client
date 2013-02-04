@@ -18,6 +18,9 @@ module Tumblr
 
     # Performs post request
     def post(path, params={})
+      if Array === params[:tags]
+        params[:tags] = params[:tags].join(',')
+      end
       response = connection.post do |req|
         req.url path
         req.body = params unless params.empty?
