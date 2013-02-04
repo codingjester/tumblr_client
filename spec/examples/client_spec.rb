@@ -20,6 +20,11 @@ describe Tumblr::Client do
       Tumblr.credentials[:consumer_key].should == @key
     end
 
+    it 'should be able to make a new client (using these credentials)' do
+      Tumblr.new.should be_a(Tumblr::Client)
+      Tumblr.new.credentials[:consumer_key].should == @key
+    end
+
   end
 
   context 'when using custom copies of the client' do
