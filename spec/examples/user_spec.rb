@@ -14,6 +14,32 @@ describe Tumblr::Client::User do
 
   end
 
+  describe :dashboard do
+
+    context 'when using options that are not allowed' do
+
+      it 'should raise an error' do
+        lambda {
+          client.dashboard :not => 'an option'
+        }.should raise_error ArgumentError
+      end
+
+    end
+
+    context 'when using valid options' do
+
+      it 'should make the correct call' do
+        client.should_receive(:get).with('v2/user/dashboard', {
+          :limit => 25
+        }).and_return('response')
+        r = client.dashboard :limit => 25
+        r.should == 'response'
+      end
+
+    end
+
+  end
+
   # These two are very similar
   [:following, :likes].each do |type|
 

@@ -27,6 +27,30 @@ describe Tumblr::Client::Post do
 
   end
 
+  describe :edit do
+
+    it 'should make the correct call' do
+      client.should_receive(:post).once.with("v2/blog/#{blog_name}/post/edit", {
+        :id => 123
+      }).and_return('response')
+      r = client.edit blog_name, :id => 123
+      r.should == 'response'
+    end
+
+  end
+
+  describe :reblog do
+
+    it 'should make the correct call' do
+      client.should_receive(:post).once.with("v2/blog/#{blog_name}/post/reblog", {
+        :id => 123
+      }).and_return('response')
+      r = client.reblog blog_name, :id => 123
+      r.should == 'response'
+    end
+
+  end
+
   # Simple post types
   [:quote, :text, :link, :chat].each do |type|
 
