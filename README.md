@@ -18,10 +18,10 @@ your life easier when using the v2 api. If you need to do the full oauth workflo
 Configuration for the gem is actually pretty easy:
 
     Tumblr.configure do |config|
-        config.consumer_key = "consumer_key"
-        config.consumer_secret = "consumer_secret"
-        config.oauth_token = "access_token"
-        config.oauth_token_secret = "access_token_secret"
+      config.consumer_key = "consumer_key"
+      config.consumer_secret = "consumer_secret"
+      config.oauth_token = "access_token"
+      config.oauth_token_secret = "access_token_secret"
     end
 
 Once you have your configuration squared away it's time to make some requests!
@@ -33,15 +33,15 @@ That's it! You now have a client that can make any request to the Tumblr API.
 ### Some quick examples
 
 Getting user information:
-    
+
     >> client.info
 
 Getting a specific blog's posts and type:
-    
+
     #Grabbing a specific blogs posts
     >> client.posts("codingjester.tumblr.com")
-    
-    #Grabbing only the last 10 photos off the blog 
+
+    #Grabbing only the last 10 photos off the blog
     >> client.posts("codingjester.tumblr.com", :type => "photo", :limit => 10)
 
 
