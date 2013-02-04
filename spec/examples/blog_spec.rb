@@ -20,6 +20,38 @@ describe Tumblr::Client::Blog do
 
   end
 
+  describe :avatar do
+
+    context 'when supplying a size' do
+
+      before do
+        client.should_receive(:get_redirect_url).once.with("v2/blog/#{blog_name}/avatar/128").
+        and_return('url')
+      end
+
+      it 'should construct the request properly' do
+        r = client.avatar blog_name, 128
+        r.should == 'url'
+      end
+
+    end
+
+    context 'when no size is specified' do
+
+      before do
+        client.should_receive(:get_redirect_url).once.with("v2/blog/#{blog_name}/avatar").
+        and_return('url')
+      end
+
+      it 'should construct the request properly' do
+        r = client.avatar blog_name
+        r.should == 'url'
+      end
+
+    end
+
+  end
+
   describe :followers do
 
     context 'with invalid parameters' do

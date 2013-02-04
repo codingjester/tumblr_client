@@ -13,10 +13,9 @@ module Tumblr
       # Gets the avatar URL of specified size
       #
       def avatar(blog_name, size = nil)
-        response = get_response("v2/blog/#{blog_name}/avatar", :size => size)
-        if response.status == 301
-          response.headers['Location']
-        end
+        url = "v2/blog/#{blog_name}/avatar"
+        url = "#{url}/#{size}" unless size.nil?
+        get_redirect_url(url)
       end
 
       #

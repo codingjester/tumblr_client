@@ -11,6 +11,16 @@ module Tumblr
       end
     end
 
+    # get a redirect url
+    def get_redirect_url(path, params = {})
+      response = get_response path, params
+      if response.status == 301
+        response.headers['Location']
+      else
+        response.body['meta']
+      end
+    end
+
     # Performs a get request
     def get(path, params={})
       respond get_response(path, params)
