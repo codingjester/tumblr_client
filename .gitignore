@@ -5,3 +5,5 @@
 *.swo
 
 tmp
+
+Gemfile.lock
