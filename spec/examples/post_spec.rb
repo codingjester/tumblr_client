@@ -14,7 +14,7 @@ describe Tumblr::Client::Post do
     context 'when deleting a post' do
 
       before do
-        client.should_receive(:post).once.with("v2/blog/#{blog_name}/delete", {
+        client.should_receive(:post).once.with("v2/blog/#{blog_name}/post/delete", {
           :id => post_id
         })
       end
