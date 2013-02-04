@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require File.dirname(__FILE__) + '/lib/tumblr_client'
+
 Gem::Specification.new do |gem|
   gem.add_dependency 'faraday', '>= 0.8'
   gem.add_dependency 'faraday_middleware', '>= 0.8'
@@ -19,5 +21,5 @@ Gem::Specification.new do |gem|
   gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
   gem.summary = %q{Tumblr API wrapper}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.version = "0.6.11"
+  gem.version = Tumblr::VERSION
 end
