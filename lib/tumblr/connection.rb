@@ -7,16 +7,18 @@ module Tumblr
     def connection(options={})
       default_options = {
         :headers => {
-          :accept => "application/json",
-          :user_agent => "Tumblr v1.0"
+          :accept => 'application/json',
+          :user_agent => "tumblr_client (ruby) - #{Tumblr::VERSION}"
         },
         :url => "http://#{api_host}/"
       }
       Faraday.new("http://#{api_host}/", default_options.merge(options)) do |builder|
         data = { :api_host => api_host }.merge(credentials)
-        builder.use Tumblr::Request::TumblrOAuth, data unless credentials.empty?
+        unless credentials.empty?
+          builder.use Tumblr::Request::TumblrOAuth, data
+        end
         builder.use Faraday::Request::UrlEncoded
-        builder.use FaradayMiddleware::ParseJson, :content_type => "application/json"
+        builder.use FaradayMiddleware::ParseJson, :content_type => 'application/json'
         builder.use Faraday::Adapter::NetHttp
       end
     end

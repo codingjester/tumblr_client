@@ -15,7 +15,7 @@ module Tumblr
     include Tumblr::Client::Tagged
     include Tumblr::Client::Helper
     include Tumblr::Connection
-    
+
     def initialize(attrs= {})
       attrs = Tumblr.options.merge(attrs)
       Config::VALID_OPTIONS_KEYS.each do |key|
