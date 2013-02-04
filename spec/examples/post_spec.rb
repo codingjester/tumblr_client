@@ -7,6 +7,25 @@ describe Tumblr::Client::Post do
   let(:file_path) { '/path/to/the/file' }
   let(:file_data) { 'lol cats' }
   let(:source)    { 'the source' }
+  let(:post_id)   { 42 }
+
+  describe :delete do
+
+    context 'when deleting a post' do
+
+      before do
+        client.should_receive(:post).once.with("v2/blog/#{blog_name}/delete", {
+          :id => post_id
+        })
+      end
+
+      it 'should setup a delete properly' do
+        client.delete blog_name, post_id
+      end
+
+    end
+
+  end
 
   describe :photo do
 
@@ -17,7 +36,7 @@ describe Tumblr::Client::Post do
           client.photo blog_name, :not => 'an option'
         }.should raise_error ArgumentError
       end
-      
+
     end
 
     context 'when passing data different ways' do
