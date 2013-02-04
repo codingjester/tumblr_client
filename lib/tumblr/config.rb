@@ -1,5 +1,4 @@
 module Tumblr
-
   module Config
 
     VALID_OPTIONS_KEYS = [
@@ -32,5 +31,4 @@ module Tumblr
     end
 
   end
-
 end

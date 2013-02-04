@@ -7,6 +7,7 @@ require 'base64'
 module Tumblr
   module Request
     class TumblrOAuth < Faraday::Middleware
+
       def call(env)
         if env[:method].to_s == 'get'
             params = Faraday::Utils.parse_query(env[:url].query) || {}
@@ -65,6 +66,7 @@ module Tumblr
         secret = "#{@options[:consumer_secret]}&#{@options[:token_secret]}"
         Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::SHA1.new, secret, signature_base)).chomp.gsub(/\n/, '')
       end
+
     end
   end
 end

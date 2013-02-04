@@ -4,6 +4,7 @@ require 'tumblr/request/oauth'
 
 module Tumblr
   module Connection
+
     def connection(options={})
       default_options = {
         :headers => {
@@ -22,5 +23,6 @@ module Tumblr
         builder.use Faraday::Adapter::NetHttp
       end
     end
+
   end
 end

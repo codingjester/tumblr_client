@@ -8,6 +8,7 @@ require 'tumblr/helpers'
 
 module Tumblr
   class Client
+
     include Tumblr::Request
     include Tumblr::Client::Blog
     include Tumblr::Client::User
@@ -35,5 +36,6 @@ module Tumblr
         :token_secret => @oauth_token_secret
       }
     end
+
   end
 end
