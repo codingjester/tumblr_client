@@ -28,7 +28,7 @@ Configuration for the gem is actually pretty easy:
 
 Once you have your configuration squared away it's time to make some requests!
 
-    >> client = Tumblr.new
+    >> client = Tumblr::Client.new
 
 That's it! You now have a client that can make any request to the Tumblr API.
 
@@ -40,10 +40,10 @@ Getting user information:
 
 Getting a specific blog's posts and type:
 
-    #Grabbing a specific blogs posts
+    # Grabbing a specific blogs posts
     >> client.posts("codingjester.tumblr.com")
 
-    #Grabbing only the last 10 photos off the blog
+    # Grabbing only the last 10 photos off the blog
     >> client.posts("codingjester.tumblr.com", :type => "photo", :limit => 10)
 
 
