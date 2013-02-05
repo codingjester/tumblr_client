@@ -48,10 +48,8 @@ describe Tumblr::User do
       context 'with defaults' do
 
          it 'should make the reqest properly' do
-           client.should_receive(:get).with("v2/user/#{type}", {
-             :limit => 20,
-             :offset => 0
-           }).and_return('response')
+           client.should_receive(:get).with("v2/user/#{type}", {}).
+           and_return('response')
            r = client.send type
            r.should == 'response'
          end
@@ -65,7 +63,7 @@ describe Tumblr::User do
              :limit => 10,
              :offset => 5
            }).and_return('response')
-           r = client.send type, 5, 10
+           r = client.send type, :offset => 5, :limit => 10
            r.should == 'response'
          end
 

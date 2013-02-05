@@ -11,12 +11,14 @@ module Tumblr
       get('v2/user/dashboard', options)
     end
 
-    def likes(offset = 0, limit = 20)
-      get('v2/user/likes', :limit => limit, :offset => offset)
+    def likes(options = {})
+      validate_options([:limit, :offset], options)
+      get('v2/user/likes', options)
     end
 
-    def following(offset = 0, limit = 20)
-      get('v2/user/following', :limit => limit, :offset => offset)
+    def following(options = {})
+      validate_options([:limit, :offset], options)
+      get('v2/user/following', options)
     end
 
     def follow(url)
