@@ -32,6 +32,24 @@ describe Tumblr::Request do
 
   end
 
+  describe :get do
+
+    before do
+      @path = '/the/path'
+      @params = { :hello => 'world' }
+      client.should_receive(:get_response).once.with(@path, @params).
+      and_return(OpenStruct.new({
+        :status => 200,
+        :body => { 'response' => 'result' }
+      }))
+    end
+
+    it 'should get the response directly' do
+      client.get(@path, @params).should == 'result'
+    end
+
+  end
+
   describe :get_redirect_url do
 
     context 'when redirect is found' do
