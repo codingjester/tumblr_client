@@ -88,4 +88,4 @@ please if you would like to contribute, let me know and throw me a pull request!
 
 ### Requirements
 
-* Ruby >= 1.9.2
+* Ruby 1.9.x or 2.x.x
