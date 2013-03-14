@@ -1,4 +1,5 @@
 require 'json'
+require 'hashie'
 
 module Tumblr
   module Request
@@ -23,7 +24,8 @@ module Tumblr
 
     # Performs a get request
     def get(path, params={})
-      respond get_response(path, params)
+      d = respond get_response(path, params)
+      Hashie::Mash.new d
     end
 
     # Performs post request
@@ -36,7 +38,8 @@ module Tumblr
         req.body = params unless params.empty?
       end
       #Check for errors and encapsulate
-      respond(response)
+      d = respond(response)
+      Hashie::Mash.new d
     end
 
     def respond(response)

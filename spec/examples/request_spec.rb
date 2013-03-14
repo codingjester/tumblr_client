@@ -40,12 +40,12 @@ describe Tumblr::Request do
       client.should_receive(:get_response).once.with(@path, @params).
       and_return(OpenStruct.new({
         :status => 200,
-        :body => { 'response' => 'result' }
+        :body => { 'response' => { 'something' => 'result' } }
       }))
     end
 
     it 'should get the response directly' do
-      client.get(@path, @params).should == 'result'
+      client.get(@path, @params).should == { 'something' => 'result' }
     end
 
   end
