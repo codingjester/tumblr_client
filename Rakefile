@@ -14,7 +14,7 @@ task :release => :build do
   system "git tag v#{Tumblr::VERSION}"
   system "git push origin --tags"
   # push the gem
-  system "gem push ice_cube-#{Tumblr::VERSION}.gem"
+  system "gem push tumblr_client-#{Tumblr::VERSION}.gem"
 end
 
 RSpec::Core::RakeTask.new(:test) do |t|
