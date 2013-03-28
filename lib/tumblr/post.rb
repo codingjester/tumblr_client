@@ -4,15 +4,15 @@ module Tumblr
     STANDARD_POST_OPTIONS = [:state, :tags, :tweet, :date, :markdown, :slug, :format]
 
     def edit(blog_name, options = {})
-      post("v2/blog/#{blog_name}/post/edit", options)
+      post(blog_path(blog_name, 'post/edit'), options)
     end
 
     def reblog(blog_name, options = {})
-      post("v2/blog/#{blog_name}/post/reblog", options)
+      post(blog_path(blog_name, 'post/reblog'), options)
     end
 
     def delete(blog_name, id)
-      post("v2/blog/#{blog_name}/post/delete", :id => id)
+      post(blog_path(blog_name, 'post/delete'), :id => id)
     end
 
     def photo(blog_name, options = {})
@@ -30,7 +30,7 @@ module Tumblr
 
       options[:type] = 'photo'
       extract_data!(options)
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def quote(blog_name, options = {})
@@ -38,7 +38,7 @@ module Tumblr
       validate_options(valid_opts, options)
 
       options[:type] = 'quote'
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def text(blog_name, options = {})
@@ -46,7 +46,7 @@ module Tumblr
       validate_options(valid_opts, options)
 
       options[:type] = 'text'
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def link(blog_name, options = {})
@@ -54,7 +54,7 @@ module Tumblr
       validate_options(valid_opts, options)
 
       options[:type] = 'link'
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def chat(blog_name, options = {})
@@ -62,7 +62,7 @@ module Tumblr
       validate_options(valid_opts, options)
 
       options[:type] = 'chat'
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def audio(blog_name, options = {})
@@ -72,7 +72,7 @@ module Tumblr
 
       options[:type] = 'audio'
       extract_data!(options)
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     def video(blog_name, options = {})
@@ -82,10 +82,14 @@ module Tumblr
 
       options[:type] = 'video'
       extract_data!(options)
-      post("v2/blog/#{blog_name}/post", options)
+      post(post_path(blog_name), options)
     end
 
     private
+
+    def post_path(blog_name)
+      blog_path(blog_name, 'post')
+    end
 
     # Look for the various ways that data can be passed, and normalize
     # the result in this hash

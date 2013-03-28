@@ -18,6 +18,14 @@ describe Tumblr::Blog do
       r.should == 'response'
     end
 
+    it 'should make the proper request with a short blog name' do
+      client.should_receive(:get).once.with("v2/blog/b.tumblr.com/info", {
+        :api_key => consumer_key
+      }).and_return 'response'
+      r = client.blog_info 'b'
+      r.should == 'response'
+    end
+
   end
 
   describe :avatar do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Tumblr::Post do
 
   let(:client) { Tumblr::Client.new }
-  let(:blog_name) { 'blogname' }
+  let(:blog_name) { 'blog.name' }
   let(:file_path) { '/path/to/the/file' }
   let(:file_data) { 'lol cats' }
   let(:source)    { 'the source' }
