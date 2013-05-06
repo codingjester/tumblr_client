@@ -9,6 +9,12 @@ require 'tumblr/helpers'
 module Tumblr
   class Client
 
+    class << self
+      def default_api_host
+        ENV['TUMBLR_API_HOST'] || 'api.tumblr.com'
+      end
+    end
+
     include Tumblr::Request
     include Tumblr::Blog
     include Tumblr::User
@@ -25,7 +31,7 @@ module Tumblr
     end
 
     def api_host
-      ENV['TUMBLR_API_HOST'] || 'api.tumblr.com'
+      self.class.default_api_host
     end
 
     def credentials

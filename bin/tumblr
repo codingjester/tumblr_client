@@ -9,6 +9,9 @@ require 'irb/completion'
 
 path = File.join ENV['HOME'], '.tumblr'
 
+host = Tumblr::Client.default_api_host.dup
+host.gsub! 'api.', 'www.'
+
 if File.exist?(path)
 
   # Load configuration from data
@@ -23,14 +26,14 @@ else
 
   Tumblr.configure do |config|
 
-    puts "Register an application at: http://www.tumblr.com/oauth/apps"
+    puts "Register an application at: http://#{host}/oauth/apps"
     print 'OAuth Consumer key: '
     config.consumer_key = gets.chomp
 
     print 'OAuth Consumer secret: '
     config.consumer_secret = gets.chomp
 
-    site = 'http://www.tumblr.com'
+    site = "http://#{host}"
     consumer = OAuth::Consumer.new(config.consumer_key, config.consumer_secret, :site => site)
     request_token = consumer.get_request_token
 
