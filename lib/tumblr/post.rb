@@ -4,6 +4,7 @@ module Tumblr
     STANDARD_POST_OPTIONS = [:state, :tags, :tweet, :date, :markdown, :slug, :format]
 
     def edit(blog_name, options = {})
+      convert_source_array :source, options
       post(blog_path(blog_name, 'post/edit'), options)
     end
 
@@ -19,14 +20,7 @@ module Tumblr
       valid_opts = STANDARD_POST_OPTIONS + [:caption, :link, :data, :data_raw, :source, :photoset_layout]
       validate_options(valid_opts, options)
       validate_no_collision options, [:data, :source]
-
-      # Allow source to be passed as an Array
-      if options.has_key?(:source) && options[:source].kind_of?(Array)
-        options[:source].each.with_index do |src, idx|
-          options["source[#{idx}]"] = src
-        end
-        options.delete(:source)
-      end
+      convert_source_array :source, options
 
       options[:type] = 'photo'
       extract_data!(options)
@@ -89,6 +83,16 @@ module Tumblr
 
     def post_path(blog_name)
       blog_path(blog_name, 'post')
+    end
+
+    # Allow source to be passed as an Array
+    def convert_source_array(key, options)
+      if options.has_key?(key) && options[key].kind_of?(Array)
+        options[key].each.with_index do |src, idx|
+          options["#{key.to_s}[#{idx}]"] = src
+        end
+        options.delete(key)
+      end
     end
 
     # Look for the various ways that data can be passed, and normalize

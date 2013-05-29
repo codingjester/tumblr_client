@@ -159,6 +159,15 @@ describe Tumblr::Post do
             client.send type, blog_name, :source => [source, source]
           end
 
+          it 'should be able to be passed as an array on edit' do
+            client.should_receive(:post).once.with("v2/blog/#{blog_name}/post/edit", {
+              :id => post_id,
+              'source[0]' => source,
+              'source[1]' => source
+            })
+            client.edit blog_name, :id => post_id, :source => [source, source]
+          end
+
         end
 
       end
