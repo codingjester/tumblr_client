@@ -22,9 +22,15 @@ describe Tumblr::Request do
 
     context 'with an error response' do
 
-      it 'should return the meta object' do
+      it 'should return the meta object (merged with response)' do
         meta = { :message => 'ohno' }
-        response = OpenStruct.new(:status => 401, :body => { 'meta' => meta })
+        response = OpenStruct.new(:status => 401, :body => { 'meta' => meta, 'response' => { :also => 'hi' } })
+        client.respond(response).should == { :message => 'ohno', :also => 'hi' }
+      end
+
+      it 'should return the meta object even when response is nil' do
+        meta = { :message => 'ohno' }
+        response = OpenStruct.new(:status => 401, :body => { 'meta' => meta, 'response' => nil })
         client.respond(response).should == meta
       end
 
