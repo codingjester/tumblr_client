@@ -43,10 +43,10 @@ module Tumblr
       if [201, 200].include?(response.status)
         response.body['response']
       else
-      # no doubt surfacing the error reason from the response body along with the generic code
-      # is going to save some other developer some very aggravating time discovering e.g. there's a daily
-      # photo post limit on Tumblr...
-        response.body['meta'].merge(response.body['response'])
+        # surface the meta alongside response
+        res = response.body['meta'] || {}
+        res.merge! response.body['response'] if response.body['response']
+        res
       end
     end
 
