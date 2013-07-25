@@ -1,3 +1,5 @@
+require 'mime/types'
+
 module Tumblr
   module Post
 
@@ -103,7 +105,8 @@ module Tumblr
         data = options.delete :data
         data = [data] unless Array === data
         data.each.with_index do |filepath, idx|
-          options["data[#{idx}]"] = File.open(filepath, 'rb').read
+          mime_type = MIME::Types.type_for(filepath)[0].content_type
+          options["data[#{idx}]"] = Faraday::UploadIO.new(filepath, mime_type)
         end
       elsif options.has_key?(:data_raw)
         data_raw = options.delete :data_raw
