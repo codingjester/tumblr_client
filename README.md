@@ -53,10 +53,6 @@ Posting some photos to Tumblr:
     # Uploads a great photoset
     >> client.photo("codingjester.tumblr.com", {:data => ['/path/to/pic.jpg', '/path/to/pic.jpg']}) 
 
-    # You can also post with the raw data
-    >> raw = File.open('/path/to/pic.jpg', 'rb').read
-    >> client.photo('codingjester.tumblr.com', :data_raw => [raw]
-
 ### The irb Console
 
 Finally, there is an irb console packaged with the gem that should help you test any calls you want to make.
