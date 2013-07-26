@@ -1,27 +1,30 @@
 require 'faraday'
 require 'faraday_middleware'
-require 'tumblr/request/oauth'
 
 module Tumblr
   module Connection
 
     def connection(options={})
-      host = api_host
+      
       default_options = {
         :headers => {
           :accept => 'application/json',
           :user_agent => "tumblr_client (ruby) - #{Tumblr::VERSION}"
         },
-        :url => "http://#{host}/"
+        :url => "http://#{api_host}/"
       }
-      Faraday.new("http://#{host}/", default_options.merge(options)) do |builder|
-        data = { :api_host => host }.merge(credentials)
+
+      client = options[:client] ||= Faraday.default_adapter
+
+      Faraday.new("http://#{api_host}/", default_options.merge(options)) do |conn|
+        data = { :api_host => api_host }.merge(credentials)
         unless credentials.empty?
-          builder.use Tumblr::Request::TumblrOAuth, data
+          conn.request :oauth, data
         end
-        builder.use Faraday::Request::UrlEncoded
-        builder.use FaradayMiddleware::ParseJson, :content_type => 'application/json'
-        builder.use Faraday::Adapter::NetHttp
+        conn.request :multipart
+        conn.request :url_encoded
+        conn.response :json, :content_type => /\bjson$/
+        conn.adapter client
       end
     end
 
