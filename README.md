@@ -33,6 +33,11 @@ Once you have your configuration squared away it's time to make some requests!
 
 That's it! You now have a client that can make any request to the Tumblr API.
 
+Also since the client is created with the amazing library [Faraday](https://github.com/lostisland/faraday), you can
+configure it to use any HTTP Client it supports.
+    
+    >> client = Tumblr::Client.new(:client => :httpclient)
+
 ### Some quick examples
 
 Getting user information:
